@@ -1,15 +1,15 @@
 source 'https://rubygems.org'
 
-ruby '2.3.0'
+ruby '2.4.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.6'
+gem 'rails'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier'
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
+gem 'coffee-rails'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 # Use Haml as the templating library
@@ -40,7 +40,7 @@ group :development, :test do
 
   gem 'rspec-rails'
   gem 'guard-rspec'
-  
+
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
 
@@ -55,5 +55,3 @@ group :production do
   gem 'pg' # for Heroku deployment
   gem 'rails_12factor'
 end
-
-
