@@ -19,6 +19,17 @@ class MoviesController < ApplicationController
       @title = 'hilite'
     end
     @movies = Movie.order(sort)
+    @all_ratings = Movie.ratings
+    rating_display = params[:ratings]
+    @selected = []
+    if rating_display.present?
+      for rating in rating_display.keys
+        @selected.push(rating)
+      end
+      @movies = Movie.where(rating: rating_display.keys)
+    else
+      @selected = @all_ratings
+    end
   end
 
   def new
