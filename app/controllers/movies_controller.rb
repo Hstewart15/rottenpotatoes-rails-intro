@@ -12,13 +12,19 @@ class MoviesController < ApplicationController
 
   def index
     sort = params[:sort]
+    sesh_rating = session[:ratings]
+    sesh_sort = session[:sort]
+    if !sort.present?
+      sort = sesh_sort
+    end
     if sort == 'release_date'
       @release = 'hilite'
     end
     if sort == 'title'
       @title = 'hilite'
     end
-    @movies = Movie.order(sort)
+    session[:sort] =  sort
+
     @all_ratings = Movie.ratings
     rating_display = params[:ratings]
     @selected = []
@@ -26,10 +32,22 @@ class MoviesController < ApplicationController
       for rating in rating_display.keys
         @selected.push(rating)
       end
-      @movies = Movie.where(rating: rating_display.keys)
+      @movies = Movie.where(rating: rating_display.keys).order(sort)
+      session[:ratings] = rating_display
     else
       @selected = @all_ratings
+      if sesh_rating.present?
+        @selected = sesh_rating
+        @movies = Movie.where(rating: sesh_rating.keys).order(sort)
+        if !(params[:sort].present? && params[:ratings].present?)
+          flash.keep
+          redirect_to movies_path(:sort => session[:sort], :ratings => session[:ratings])
+        end
+      else
+        @movies = Movie.all.order(sort)
+      end
     end
+
   end
 
   def new
